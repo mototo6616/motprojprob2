@@ -2,7 +2,7 @@
   {
     "id": "electro-city-60",
     "category": "electro",
-    "name": "Электроскутер City 60",
+    "name": "Электроху1 60",
     "price": "89 900",
     "specs": [
       {
@@ -29,7 +29,7 @@
   {
     "id": "electro-trail-500",
     "category": "electro",
-    "name": "Электровелосипед Trail 500",
+    "name": "Электровел 500 коч",
     "price": "54 900",
     "specs": [
       {
@@ -56,7 +56,7 @@
   {
     "id": "pitbike-125-cross",
     "category": "pitbike",
-    "name": "Питбайк 125cc Cross",
+    "name": "Питбайк кроссХАХАХ",
     "price": "79 900",
     "specs": [
       {
@@ -138,7 +138,7 @@
     "id": "quad-atv-200-4x4",
     "category": "quad",
     "name": "Квадроцикл ATV 200 4×4",
-    "price": "179 900",
+    "price": "12 900",
     "specs": [
       {
         "label": "Объём",
