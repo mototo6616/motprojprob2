@@ -2,8 +2,8 @@ name: Sync catalog and deploy
 
 on:
   schedule:
-    # Каждые 4 часа. Синтаксис — обычный cron (минута час день месяц день-недели).
-    - cron: '0 */4 * * *'
+    # Каждые 15 минут (со сдвигом от круглых значений — на них у GitHub пиковая нагрузка).
+    - cron: '4,19,34,49 * * * *'
   workflow_dispatch: {}   # позволяет запустить вручную кнопкой во вкладке Actions
   push:
     branches: [main]      # деплой сразу же при любом пуше в main
@@ -40,6 +40,17 @@ jobs:
           git config user.name "catalog-sync-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/products.json
+
+          # Keepalive: GitHub тихо отключает расписание, если 60 дней подряд
+          # не было ни одного коммита. Раз в ~45 дней обновляем служебный файл,
+          # даже если каталог не менялся — чтобы расписание не "уснуло".
+          LAST_COMMIT_DAYS_AGO=$(( ( $(date +%s) - $(git log -1 --format=%ct) ) / 86400 ))
+          if [ "$LAST_COMMIT_DAYS_AGO" -ge 45 ]; then
+            date -u +"%Y-%m-%dT%H:%M:%SZ" > .github/last-keepalive
+            git add .github/last-keepalive
+            echo "Прошло $LAST_COMMIT_DAYS_AGO дней с последнего коммита — делаю keepalive-коммит."
+          fi
+
           git diff --staged --quiet || git commit -m "chore: sync catalog from sheet [auto]"
           git push
 
