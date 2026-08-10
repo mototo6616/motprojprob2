@@ -42,7 +42,7 @@ function parsePhotos(raw) {
     .split(',')
     .map(name => name.trim())
     .filter(Boolean)
-    .map(name => `img/products/${name}`);
+    .map(name => /^https?:\/\//i.test(name) ? name : `img/products/${name}`);
 }
 
 function parseBool(raw) {
