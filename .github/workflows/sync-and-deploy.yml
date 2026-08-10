@@ -2,11 +2,19 @@ name: Sync catalog and deploy
 
 on:
   schedule:
-    # Каждые 15 минут (со сдвигом от круглых значений — на них у GitHub пиковая нагрузка).
-    - cron: '4,19,34,49 * * * *'
-  workflow_dispatch: {}   # позволяет запустить вручную кнопкой во вкладке Actions
+    # Проверяем Google Таблицу каждые 5 минут.
+    # Запуск начинается не с круглой минуты, чтобы снизить вероятность задержек GitHub.
+    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 * * * *'
+
+  workflow_dispatch: {}
+
+  # Деплой при изменении кода.
+  # Автокоммит синхронизации data/products.json не должен запускать workflow второй раз.
   push:
-    branches: [main]      # деплой сразу же при любом пуше в main
+    branches: [main]
+    paths-ignore:
+      - 'data/products.json'
+      - '.github/last-keepalive'
 
 permissions:
   contents: write
@@ -20,6 +28,7 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -39,27 +48,34 @@ jobs:
         run: |
           git config user.name "catalog-sync-bot"
           git config user.email "actions@users.noreply.github.com"
+
           git add data/products.json
 
-          # Keepalive: GitHub тихо отключает расписание, если 60 дней подряд
-          # не было ни одного коммита. Раз в ~45 дней обновляем служебный файл,
-          # даже если каталог не менялся — чтобы расписание не "уснуло".
+          # Keepalive: GitHub может отключить расписание после длительного
+          # отсутствия активности. Раз в ~45 дней обновляем служебный файл.
           LAST_COMMIT_DAYS_AGO=$(( ( $(date +%s) - $(git log -1 --format=%ct) ) / 86400 ))
+
           if [ "$LAST_COMMIT_DAYS_AGO" -ge 45 ]; then
             date -u +"%Y-%m-%dT%H:%M:%SZ" > .github/last-keepalive
             git add .github/last-keepalive
             echo "Прошло $LAST_COMMIT_DAYS_AGO дней с последнего коммита — делаю keepalive-коммит."
           fi
 
-          git diff --staged --quiet || git commit -m "chore: sync catalog from sheet [auto]"
-          git push
+          if git diff --staged --quiet; then
+            echo "Изменений для коммита нет."
+          else
+            git commit -m "chore: sync catalog from sheet [auto]"
+            git push
+          fi
 
   deploy:
     needs: sync
     runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - uses: actions/checkout@v4
         with:
