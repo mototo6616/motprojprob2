@@ -39,6 +39,10 @@ function render(p) {
       <div class="product__gallery">
         <div class="gallery__main">
           <img id="gallery-main-img" src="${photos[0]}" alt="${p.name}" onerror="this.src='${CATEGORY_ICON[p.category]}'">
+          ${photos.length > 1 ? `
+            <button type="button" class="gallery__nav gallery__nav--prev" aria-label="Предыдущее фото">‹</button>
+            <button type="button" class="gallery__nav gallery__nav--next" aria-label="Следующее фото">›</button>
+          ` : ''}
         </div>
         ${photos.length > 1 ? `<div class="gallery__thumbs">${gallery}</div>` : ''}
       </div>
@@ -61,13 +65,25 @@ function render(p) {
 
   const thumbs = root.querySelectorAll('.gallery__thumb');
   const mainImg = document.getElementById('gallery-main-img');
-  thumbs.forEach(thumb => {
-    thumb.addEventListener('click', () => {
-      thumbs.forEach(t => t.classList.remove('is-active'));
-      thumb.classList.add('is-active');
-      mainImg.src = thumb.dataset.src;
+  let currentIndex = 0;
+
+  function showPhoto(i) {
+    currentIndex = (i + photos.length) % photos.length;
+    mainImg.src = photos[currentIndex];
+    thumbs.forEach((t, ti) => t.classList.toggle('is-active', ti === currentIndex));
+  }
+
+  thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => showPhoto(i)));
+
+  if (photos.length > 1) {
+    const mainEl = root.querySelector('.gallery__main');
+    mainEl.querySelector('.gallery__nav--prev').addEventListener('click', () => showPhoto(currentIndex - 1));
+    mainEl.querySelector('.gallery__nav--next').addEventListener('click', () => showPhoto(currentIndex + 1));
+    enableSwipe(mainEl, {
+      onSwipeLeft: () => showPhoto(currentIndex + 1),
+      onSwipeRight: () => showPhoto(currentIndex - 1)
     });
-  });
+  }
 }
 
 function renderNotFound() {

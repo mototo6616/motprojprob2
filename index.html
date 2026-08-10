@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>МОТОТОВАРЫ — электротранспорт, питбайки, квадроциклы</title>
 <meta name="description" content="Электротранспорт, питбайки и квадроциклы. Заказ по телефону и WhatsApp.">
 <link rel="stylesheet" href="css/style.css">
@@ -121,7 +121,7 @@
         <li class="step">
           <span class="step__num">02</span>
           <h3>Связываетесь с нами</h3>
-          <p>Звонок, WhatsApp или Telegram — уточняем наличие и детали.</p>
+          <p>Звонок, WhatsApp, Telegram или MAX — уточняем наличие и детали.</p>
         </li>
         <li class="step">
           <span class="step__num">03</span>
@@ -151,6 +151,10 @@
           <span class="contact-line__label">Telegram</span>
           <span class="contact-line__value">@your_username</span>
         </a>
+        <a href="https://max.ru/u/REPLACE_ME" target="_blank" rel="noopener" class="contact-line">
+          <span class="contact-line__label">MAX</span>
+          <span class="contact-line__value">Написать</span>
+        </a>
 
         <div class="contact-line contact-line--static contact-line--long">
           <span class="contact-line__label">Адрес</span>
@@ -162,9 +166,12 @@
         </div>
       </div>
 
-      <div class="contacts__map" aria-hidden="true">
-        <div style="position:relative;overflow:hidden;"><a href="https://yandex.com/maps/11119/republic-of-tatarstan/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Republic of Tatarstan</a><a href="https://yandex.com/maps/11119/republic-of-tatarstan/house/tsentralnaya_ulitsa_138b/YUgYcA9kSUAPQFtvfXl1dn5lZA==/?ll=51.685448%2C55.547462&utm_medium=mapframe&utm_source=maps&z=17.4" style="color:#eee;font-size:12px;position:absolute;top:14px;">Tsentralnaya ulitsa, 138Б — Yandex Maps</a><iframe src="https://yandex.com/map-widget/v1/?ll=51.685448%2C55.547462&mode=whatshere&whatshere%5Bpoint%5D=51.684058%2C55.547260&whatshere%5Bzoom%5D=17&z=17.4" width="560" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div>
-        
+      <div class="contacts__map">
+        <iframe
+          src="https://yandex.com/map-widget/v1/?ll=51.684480%2C55.547216&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgo0MzAxODQyNDE4EuoB0KDQvtGB0YHQuNGPLCDQoNC10YHQv9GD0LHQu9C40LrQsCDQotCw0YLQsNGA0YHRgtCw0L0gKNCi0LDRgtCw0YDRgdGC0LDQvSksINCd0LjQttC90LXQutCw0LzRgdC60LjQuSDRgNCw0LnQvtC9LCDQmtCw0LXQvdC70LjQvdGB0LrQvtC1INGB0LXQu9GM0YHQutC-0LUg0L_QvtGB0LXQu9C10L3QuNC1LCDRgdC10LvQviDQkdC-0YDQvtC6LCDQptC10L3RgtGA0LDQu9GM0L3QsNGPINGD0LvQuNGG0LAsIDEzONCRIgoNebxOQhVkMF5C&z=17.45"
+          allowfullscreen
+          loading="lazy"
+          title="Карта — Центральная улица, 138Б/1, с. Борок"></iframe>
       </div>
     </div>
   </section>
@@ -191,6 +198,7 @@
       <a href="tel:+79000000000" class="btn btn--accent" id="modal-call">Позвонить</a>
       <a href="#" target="_blank" rel="noopener" class="btn btn--whatsapp" id="modal-wa">WhatsApp</a>
       <a href="#" target="_blank" rel="noopener" class="btn btn--telegram" id="modal-tg">Telegram</a>
+      <a href="#" target="_blank" rel="noopener" class="btn btn--max" id="modal-max">MAX</a>
     </div>
   </div>
 </div>
