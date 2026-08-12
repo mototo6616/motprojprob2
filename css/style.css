@@ -497,54 +497,43 @@ section{
   --card-inline:20px;
 }
 
+/*
+ * Фото в карточке каталога.
+ *
+ * Раньше здесь был padding:30px, из-за чего вокруг
+ * каждой фотографии появлялись одинаковые огромные поля.
+ *
+ * Теперь фото полностью заполняет область карточки.
+ */
 .card__media{
   aspect-ratio:16/11;
+  position:relative;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:30px;
+  padding:0;
+  overflow:hidden;
+  background:#fff;
 }
 
 .card__media img{
   width:100%;
   height:100%;
   color:var(--text-muted);
+  object-fit:contain;
+  object-position:center;
 }
 
-.card__media--electro{
-  background:linear-gradient(
-    160deg,
-    rgba(51,199,255,.12),
-    transparent
-  );
-}
-
-.card__media--electro img{
-  color:var(--cyan);
-}
-
-.card__media--pitbike{
-  background:linear-gradient(
-    160deg,
-    rgba(255,107,53,.14),
-    transparent
-  );
-}
-
-.card__media--pitbike img{
-  color:var(--cat-pitbike);
-}
-
+.card__media--electro,
+.card__media--pitbike,
 .card__media--quad{
-  background:linear-gradient(
-    160deg,
-    rgba(199,204,209,.14),
-    transparent
-  );
+  background:#fff;
 }
 
+.card__media--electro img,
+.card__media--pitbike img,
 .card__media--quad img{
-  color:var(--cat-quad);
+  color:var(--text-muted);
 }
 
 .card__body{
@@ -904,13 +893,13 @@ a.contact-line:hover{
 .gallery__main{
   position:relative;
   aspect-ratio:4/3;
-  background:var(--bg-alt);
+  background:#fff;
   border:1px solid var(--line);
   border-radius:var(--radius);
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:36px;
+  padding:0;
   overflow:hidden;
 }
 
@@ -918,7 +907,7 @@ a.contact-line:hover{
   width:100%;
   height:100%;
   object-fit:contain;
-  color:var(--text-muted);
+  object-position:center;
 }
 
 .gallery__nav{
@@ -987,15 +976,6 @@ a.contact-line:hover{
   margin:0 0 22px;
 }
 
-/*
- * ===== Product specifications =====
- *
- * ВАЖНО:
- * Используем grid вместо flex.
- * minmax(0, 1fr) и min-width:0 позволяют длинным
- * значениям из Google Sheets переноситься внутри
- * доступной ширины, а не выталкивать страницу вправо.
- */
 .spec-table{
   margin-top:28px;
   border-top:1px solid var(--line);
@@ -1104,11 +1084,6 @@ a.contact-line:hover{
     flex:1;
   }
 
-  /*
-   * На телефоне характеристики становятся
-   * вертикальными, чтобы значение никогда
-   * не сжимало название и не вылезало вправо.
-   */
   .spec-row{
     grid-template-columns:1fr;
     gap:4px;
